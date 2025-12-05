@@ -1,7 +1,7 @@
 import userService from "../services/user.service.js";
 import generateToken from "../utils/token-generator.js";
 
-export const iniciarSesion = async function (req, res, next) {
+export const iniciarSesion = async function (req, res) {
   const { email, password } = req.headers;
   if (!email || !password) {
     return res.status(401).json({ error: "Falta email y/o contraseña" });
@@ -34,7 +34,7 @@ export const registrarUsuario = async function (req, res) {
 
   try {
     await userService.registrarUsuario(name, email, password, role);
-    res.status(201).json({});
+    res.status(201).json({ message: "El usuario fue registrado exitosamente" });
   } catch (error) {
     res.status(500).json(error);
   }

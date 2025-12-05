@@ -6,7 +6,9 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 const productsCollection = collection(db, "products");
 
@@ -20,9 +22,14 @@ export async function obtenerProductos() {
 }
 
 export async function obtenerProductoPorId(id) {
-  const productDoc = await getDoc(doc(productsCollection, id));
-  if (productDoc.exists()) {
-    return productDoc.data();
+  // const productDoc = await getDoc(doc(productsCollection, id));
+  const q = await query(
+    productsCollection,
+    where("id", "==", id),
+  );
+  const productsDoc = await getDocs(q);
+  if (productsDoc.exists()) {
+    return productsDoc.data();
   } else {
     return null;
   }
