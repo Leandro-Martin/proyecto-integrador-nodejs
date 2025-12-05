@@ -22,14 +22,9 @@ export async function obtenerProductos() {
 }
 
 export async function obtenerProductoPorId(id) {
-  // const productDoc = await getDoc(doc(productsCollection, id));
-  const q = await query(
-    productsCollection,
-    where("id", "==", id),
-  );
-  const productsDoc = await getDocs(q);
-  if (productsDoc.exists()) {
-    return productsDoc.data();
+  const productDoc = await getDoc(doc(productsCollection, id));
+  if (productDoc) {
+    return productDoc.data();
   } else {
     return null;
   }
